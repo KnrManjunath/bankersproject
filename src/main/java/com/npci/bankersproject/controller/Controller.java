@@ -3,6 +3,8 @@ package com.npci.bankersproject.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,6 +46,7 @@ public class Controller {
 	}
 
 	@GetMapping("/getCustById/{id}")
+	@Cacheable(value="customer", key="#cust_id")
 	public ResponseEntity<Customer> getCustomerById(@PathVariable("id") int custId) {
 		Customer customer = null;
 
@@ -55,19 +58,32 @@ public class Controller {
 		return new ResponseEntity<Customer>(customer, HttpStatus.OK);
 	}
 
-	@PostMapping("/addcustomer/")
+//	//@PostMapping("/addcustomer")
+//	public ResponseEntity<Customer> addOrUpdate(@RequestBody Customer customer) {
+//		Customer customers1 = null;
+//
+//		try {
+//			customers1 = customerService.addOrUpdateCustomer(customer);
+//		} catch (Exception ex) {
+//			ex.getMessage();
+//		}
+//		return new ResponseEntity<Customer>(customers1, HttpStatus.OK);
+////	}
+////
+	@PostMapping("/addorupdateCustomers")
 	public ResponseEntity<Customer> addOrUpdate(@RequestBody Customer customer) {
-		Customer customers1 = null;
+		Customer customers = null;
 
 		try {
-			customers1 = customerService.addOrUpdateCustomer(customer);
-		} catch (Exception ex) {
-			ex.getMessage();
+			customers = customerService.addOrUpdateCustomer(customer);
+		} catch (Exception e) {
+			e.getMessage();
 		}
-		return new ResponseEntity<Customer>(customers1, HttpStatus.OK);
+		return new ResponseEntity<Customer>(customers, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/deletecustomer/{id}")
+	@CacheEvict(value="customer", key="#cust_Id")
 	public ResponseEntity<Customer> deleteUserById(@PathVariable("id") int custId) {
 		Customer customer = null;
 

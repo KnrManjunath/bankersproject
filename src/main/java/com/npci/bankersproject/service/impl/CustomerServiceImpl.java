@@ -51,7 +51,6 @@ public class CustomerServiceImpl implements CustomerService {
 //
 //	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public Customer addOrUpdateCustomer(Customer customer) {
 		// TODO Auto-generated method stub

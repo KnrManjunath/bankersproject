@@ -1,5 +1,7 @@
 package com.npci.bankersproject.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 //import lombok.Data;
@@ -7,7 +9,9 @@ import javax.persistence.*;
 //@Data
 @Entity
 @Table(name = "customer")
-public class Customer {
+public class Customer implements Serializable  {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

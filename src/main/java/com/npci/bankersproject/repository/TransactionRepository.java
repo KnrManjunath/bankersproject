@@ -1,3 +1,4 @@
+
 package com.npci.bankersproject.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
